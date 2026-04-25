@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Handling</title>
+    <link rel="stylesheet" href="{% static "style.css" %}">
+</head>
+<body>
+    <nav>
+        <h1>PDF Handling</h1>
+    </nav>
+
+    <div class="container">
+        <div class="subcon">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="pdf_file" required>
+                
+                <div id="watermarkInput" style="display:none; margin-top:10px;">
+                    <input type="text" name="watermark_text" placeholder="Enter Watermark Text..." >
+                </div>
+                <div id="secondpdf" style="display:none; margin-top:5px;">
+                    <input type="file" name="secondpdf" >
+                </div>
+                <div id="password" style="display:none; margin-top:10px;">
+                    <input type="text" name="password" placeholder="Enter Password..." >
+                </div>
+
+                <label>Select the Mode</label>
+                
+                <select name="mode" id="modeSelect" onchange="toggleWatermark()">
+                    <option value="extract">Extract Text</option>
+                    <option value="rotate">Rotate</option>
+                    <option value="watermark">Apply Watermark</option>
+                    <option value="details">Get Details</option>
+                    <option value="merge">Merge PDF</option>
+                    <option value="encrypt">Encryption</option>
+                </select>
+                
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script>
+function toggleWatermark() {
+    let mode = document.getElementById("modeSelect").value;
+    let box = document.getElementById("watermarkInput");
+    let pdf2 = document.getElementById("secondpdf");
+    let pass = document.getElementById("password");
+    
+
+    if (mode === "watermark") {
+        box.style.display = "block";
+    } else {
+        box.style.display = "none";
+    }
+
+    if (mode === "merge") {
+        pdf2.style.display = "block";
+    } else {
+        pdf2.style.display = "none";
+    }
+
+    if (mode === "encrypt") {
+        pass.style.display = "block";
+    } else {
+        pass.style.display = "none";
+    }
+}
+</script>
+
+</html>
