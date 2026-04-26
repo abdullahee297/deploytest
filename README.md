@@ -1,11 +1,31 @@
-🚀 Django Deployment on Vercel (Complete Guide)
+# 🚀 Django QR Generator (Vercel Deployment)
 
-This project demonstrates how to deploy a Django application on Vercel using:
+![Django](https://img.shields.io/badge/Django-5.x-092E20?style=for-the-badge&logo=django&logoColor=white)
+![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-api/index.py as the entry point
-WhiteNoise for static files
-SQLite database (default)
-📁 Project Structure
+A Django-based QR Generator web app deployed on Vercel using WhiteNoise for static files.
+
+---
+
+# 🌐 Live Demo
+https://your-project-link.vercel.app
+
+---
+
+# 📸 Preview
+
+## Home Page
+![Home Page](https://via.placeholder.com/1000x500.png?text=Home+Page+Screenshot)
+
+## QR Generator UI
+![QR Generator](https://via.placeholder.com/1000x500.png?text=QR+Generator+UI)
+
+---
+
+# 📁 Project Structure
+
 project/
 │
 ├── api/
@@ -15,6 +35,8 @@ project/
 │   ├── settings.py
 │   ├── urls.py
 │   ├── wsgi.py
+│
+├── pdfapp/
 │
 ├── static/
 │   └── style.css
@@ -26,89 +48,52 @@ project/
 ├── vercel.json
 ├── build.sh
 ├── requirements.txt
-⚙️ 1. API Entry Point (api/index.py)
 
-This file is REQUIRED for Vercel to run Django.
+---
 
+# ⚙️ Features
+- QR code generation from text/links  
+- Simple UI  
+- Django backend  
+- Vercel deployment  
+- WhiteNoise static handling  
+
+---
+
+# 🧠 Key Files
+
+## api/index.py
+```python
 import os
 import sys
 
-# Add project root to path
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-# Django settings module
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "pdfhandling.settings")
 
 from django.core.wsgi import get_wsgi_application
 
 application = get_wsgi_application()
-⚙️ 2. Django Settings (settings.py)
-✅ Important Configurations
-import os
-from pathlib import Path
+```
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+---
 
+## settings.py (important)
+```python
 DEBUG = False
-
 ALLOWED_HOSTS = ["*"]
-📦 Installed Apps
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'pdfapp',
-]
-🧩 Middleware (WhiteNoise MUST be here)
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-📁 Templates
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
-        'APP_DIRS': True,
-    }
-]
-🗄️ Database (SQLite)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-🎨 Static Files (IMPORTANT)
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-⚡ 3. Install WhiteNoise
-pip install whitenoise
-🧪 4. Collect Static Files
+```
 
-Run this before deployment:
+---
 
-python manage.py collectstatic --noinput
-
-👉 This creates:
-
-staticfiles/
-🚀 5. Vercel Configuration (vercel.json)
+## vercel.json
+```json
 {
   "version": 2,
   "builds": [
@@ -124,35 +109,31 @@ staticfiles/
     }
   ]
 }
-🔧 6. Build Script (build.sh)
+```
 
-Used to install dependencies + collect static files.
+---
 
-#!/bin/bash
-
+## build.sh
+```bash
 pip install -r requirements.txt
 python manage.py collectstatic --noinput
-📄 7. Requirements (requirements.txt)
+```
 
-Example:
+---
 
-Django>=5.2
-whitenoise
-gunicorn
-🌐 8. Template Usage (IMPORTANT)
+# 🚀 Deployment Steps
+1. Push to GitHub  
+2. Import to Vercel  
+3. Deploy  
 
-Always load static like this:
+---
 
-{% load static %}
+# ⚠️ Issues Fix
+- Run collectstatic for CSS  
+- Ensure WhiteNoise is installed  
+- Fix api/index.py entry point  
 
-<link rel="stylesheet" href="{% static 'style.css' %}">
-🚀 9. Deployment Steps
-Step 1: Push to GitHub
-git add .
-git commit -m "deploy setup"
-git push origin main
-Step 2: Import into Vercel
-Go to https://vercel.com
-Import GitHub repo
-Select project
-Step 3: Deploy 🎉
+---
+
+# 👨‍💻 Author
+Muhammad Abdullah
